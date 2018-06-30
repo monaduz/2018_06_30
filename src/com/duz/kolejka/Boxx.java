@@ -1,4 +1,4 @@
-package com.duz.stosWskaznik;
+package com.duz.kolejka;
 
     public class Boxx<T> {
         private T element;

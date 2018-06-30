@@ -13,6 +13,7 @@ class LinkedStack {
     public void push (Boxx element){
         size++;
         top = new StackElement( element,top );
+        System.out.println("dodano: " + top.value);
     }
 
     public Boxx peek(){
@@ -20,6 +21,7 @@ class LinkedStack {
     }
 
     public void pop() {
+        System.out.println("usunięto: "+top.value);
         top=top.previousElement;
         size--;
     }
