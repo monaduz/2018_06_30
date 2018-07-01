@@ -1,42 +1,53 @@
 package com.duz.kolejka;
 
-public class Queue {
+import java.util.EmptyStackException;
 
-    private QueueElement top;
-    private QueueElement front;
+public class Queue<T> {
 
-    private int size = 0;
+    private QueueElement<T> last;
+    private QueueElement<T> front;
+
+    private int size;
 
     public Queue() {
         front = null;
-        top = null;
+        last = null;
         size = 0;
     }
 
-    public void push(Boxx element) {
-        QueueElement temporary = new QueueElement( element, top );
+    public void push(T element) {
+        QueueElement<T> temporary = new QueueElement<T>( element, last );
         if (size == 0) {
-            front = new QueueElement( element, null );
-            top = front;
+            front = new QueueElement<T>( element, null );
+            last = front;
             size++;
-            System.out.println( "dodano: " + top.value );
+            System.out.println( "dodano: " + last.value );
         } else {
-            top.nextElement = temporary;
+            last.nextElement = temporary;
             size++;
-            top = temporary;
-            System.out.println( "dodano: " + top.value );
+            last = temporary;
+            System.out.println( "dodano: " + last.value );
         }
     }
 
-    public Boxx front() {
-        return front.value;
+    public T front() {
+        if (isEmpty()){
+            throw new EmptyStackException();
+        }
+        return (T) front.value;
     }
 
     public void pop() {
-        System.out.println( "usunięto: " + front.value );
+        if (isEmpty()){
+            throw new EmptyStackException();
+        }
+        if (size==1){
+          last=null;
+        }
         front = front.nextElement;
-
+        front.previousElement=null;
         size--;
+        System.out.println( "usunięto: " + front.value );
     }
 
     public boolean isEmpty() {
@@ -44,12 +55,12 @@ public class Queue {
     }
 
 
-    private class QueueElement {
-        Boxx value;
-        QueueElement previousElement;
-        QueueElement nextElement;
+    private class QueueElement<T> {
+        T value;
+        QueueElement<T> previousElement;
+        QueueElement<T> nextElement;
 
-        public QueueElement(Boxx value, QueueElement previousElement) {
+        public QueueElement(T value, QueueElement<T> previousElement) {
             this.value = value;
             this.previousElement = previousElement;
             this.nextElement = null;
