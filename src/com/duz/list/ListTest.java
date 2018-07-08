@@ -5,26 +5,30 @@ public class ListTest {
         List list = new List();
 
         System.out.println( list.isEmpty() );
-        list.add( "nini" );
+        list.add( "pierwszy" );
         System.out.println( list );
 
-        System.out.println("head: "+ list.getHead() );
-        System.out.println("tail: "+ list.getTail() );
+        System.out.println( "head: " + list.getHead() );
+        System.out.println( "tail: " + list.getTail() );
 
-        list.add( "ojp" );
-        list.add( "gfdfd" );
-        System.out.println( list );
+        list.add( "drugi" );
+        list.add( "trzeci", 2 );
+        list.print();
 
-        list.add( "gdgdfgd",2 );
-        System.out.println( list );
+        list.add( "czwarty", 2 );
+        list.print();
 
-        System.out.println(        );
+        System.out.println();
 
         System.out.println( list.getPosition( 3 ) );
 
         System.out.println();
+        list.print();
 
-        list.remove( 3 );
-        System.out.println( list );
+        list.remove( 2 );
+        list.print();
+        System.out.println();
+        list.printBackwards();
     }
+
 }

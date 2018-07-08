@@ -21,12 +21,6 @@ public class List<T> {
         return size;
     }
 
-    public List(Element head, Element tail, int size) {
-        this.head = head;
-        this.tail = tail;
-        this.size = size;
-    }
-
     public boolean isEmpty() {
         return size == 0;
     }
@@ -37,14 +31,12 @@ public class List<T> {
             tail = head;
             System.out.println( "dodano: " + element + " - pierwszy element" );
             size++;
-            tail.setIndex( size );
         } else {
             Element temporary = new Element( element, tail );
             tail.setNext( temporary );
             tail = temporary;
             System.out.println( "dodano: " + element + " na koniec listy" );
             size++;
-            tail.setIndex( size );
         }
     }
 
@@ -55,52 +47,55 @@ public class List<T> {
         if (isEmpty()) {
             add( element );
         } else {
-            Element current = new Element( null );
-            current = head;
-            while (current.getIndex() != index) {
-                current = current.getNext();
-            }
-            Element temporary = new Element( element, current.getLast(), current );
-            temporary.setIndex( index );
-            current.getLast().setNext( temporary );
-            current.setLast( temporary );
-            current = temporary;
+            Element current = getCurrent( index );
+            Element temporary = new Element( element, current.getPrevious(), current );
+            current.getPrevious().setNext( temporary );
+            current.setPrevious( temporary );
             System.out.println( "wstawiono element: " + element + " na pozycji " + index );
             size++;
-            current = current.getNext();
-            while (current != null) {
-                current.setIndex( ++index );
-                current = current.getNext();
-            }
         }
-
     }
+
+    public Element getCurrent(int index) {
+        Element current = head;
+        int counter = 1;
+        while (counter != index) {
+            current = current.getNext();
+            counter++;
+        }
+        return current;
+    }
+
 
     public void remove(int index) {
         if (index > size) {
             throw new IndexOutOfBoundsException();
         }
-        Element current = head;
-        while (current.getIndex() != index) {
-            current = current.getNext();
-        }
-        current.getLast().setNext( current.getNext() );
-        current.getNext().setLast( current.getLast() );
-        System.out.println("usunięto element: "+current + " z indeksu " + index);
+        Element current = getCurrent( index );
+        current.getPrevious().setNext( current.getNext() );
+        current.getNext().setPrevious( current.getPrevious() );
+        System.out.println( "usunięto element: " + current + " z indeksu " + index );
         size--;
-        current = current.getNext();
-        while (current != null) {
-            current.setIndex( index++ );
+    }
+
+    public Element getPosition(int index) {
+        return getCurrent( index );
+    }
+
+    public void print() {
+        Element current = head;
+        for (int i = 1; i <= size; i++) {
+            System.out.println( "Element " + i + ": " + current );
             current = current.getNext();
         }
     }
 
-    public Element getPosition(int index) {
-        Element current = head;
-        while (current.getIndex() != index) {
-            current = current.getNext();
+    public void printBackwards() {
+        Element current = tail;
+        for (int i = size; i > 0; i--) {
+            System.out.println( "Element " + i + ": " + current );
+            current = current.getPrevious();
         }
-        return current;
     }
 
 

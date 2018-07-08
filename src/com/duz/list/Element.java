@@ -2,60 +2,46 @@ package com.duz.list;
 
 public class Element<T> {
     private T element;
-    private Element last;
+    private Element previous;
     private Element next;
-    private int index;
-
-
 
     public Element(T element) {
-        this.element=element;
-        last=null;
-        next=null;
+        this.element = element;
+        previous = null;
+        next = null;
     }
 
-    public Element(T element, Element last, Element next) {
+    public Element(T element, Element previous, Element next) {
         this.element = element;
-        this.last = last;
+        this.previous = previous;
         this.next = next;
     }
 
-    public Element(T element, Element last) {
+    public Element(T element, Element previous) {
         this.element = element;
-        this.last = last;
-        next=null;
+        this.previous = previous;
+        next = null;
     }
 
     public void setNext(Element next) {
         this.next = next;
     }
 
-    public void setIndex(int index) {
-        this.index = index;
-    }
 
-    public void setLast(Element last) {
-        this.last = last;
-    }
-
-    public int getIndex() {
-        return index;
+    public void setPrevious(Element previous) {
+        this.previous = previous;
     }
 
     public Element getNext() {
         return next;
     }
 
-    public Element getLast() {
-        return last;
+    public Element getPrevious() {
+        return previous;
     }
 
     @Override
     public String toString() {
-        return "Element{" +
-                "element=" + element +
-                ", index=" + index +
-                "\n, next=" + next +
-                '}';
+        return " " + element;
     }
 }
